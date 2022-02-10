@@ -1,0 +1,147 @@
+<div class="row mt-5">
+  <div  class="col-md-6 m-auto">
+    <div class="card card-body">
+      <h1 class="text-center mb-3"><i class="fas fa-user"></i>  Login</h1>
+  
+      <form  action="/login/signin" method="POST"
+       
+       >
+        <div class="form-group">
+         
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            placeholder="Enter Email"
+           
+          />
+        </div>
+        <div class="form-group">
+          
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control"
+            placeholder="Enter Password"
+           
+          />
+        </div>
+       
+        
+        <p><button
+         
+          
+         
+          
+          
+          
+          type="submit"
+          style=" background-color: #8064A2;margin-top: 10%;" class="btn btn-primary btn-block">Submit</button></p>
+      </form>
+      <p class="text-center mb-3">
+        No Account? <a href="/register">Register</a> 
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function callApi(){
+   
+  
+  const email=document.getElementById("email").value
+  
+  const password=document.getElementById("password").value
+ 
+  
+  const data={
+    
+   
+    email:email,
+   
+    password:password,
+   
+    }
+  const options={
+    method:"POST",
+    headers: {
+    
+    'Content-Type': 'application/json'
+  },
+    body:JSON.stringify(data)
+  }
+  fetch("login/signin",options).then(res=>{
+    res.json().then(json=>{
+      console.log("json",json)
+      if(json.message=="Success"){
+        const type=json.data;
+      //console.log("type",typeof(type),Object.keys(type))
+      console.log("custom",type["custom:userType"])
+      const userType=type["custom:userType"]
+
+
+      
+      localStorage.setItem("token",json.token)
+      localStorage.setItem("data",JSON.stringify(json.data))
+     window.location.href=`/dashboard?userType=${userType}&userName=${json.data.name}`
+    //   var options={
+    //     method:'GET',
+    //     redirect: 'manual',
+    //     headers: {
+    //       'token':localStorage.getItem("token"),
+    //       'Content-Type': 'application/json'
+    //   // 'Content-Type': 'application/x-www-form-urlencoded',
+    // },
+
+    //   }
+    //   // fetch("/dashboard",options).then(req=>{
+    //   //   console.log("req",req)
+    //   //   req.json().then(obj=>{
+    //   //     console.log("req.json",obj)
+    //   //   }).catch(err=>{
+    //   //     console.log("Errorr ",err)
+    //   //   })
+    //   //   window.location.href='/dashboard'
+    //   // }).catch(err=>{
+    //   //   console.log("Err",err)
+    //   // })
+      
+      
+      }
+      else{
+        console.log("else",json.message)
+        if(json.message=="User does not exist"){
+          alert("User does not exist")
+        }
+        else{
+          if(json.message=="User not confirmed"){
+            alert("Please verify your mail")
+          }
+          else{
+        alert("You have entered an invalid password")
+          }
+        }
+      }
+    }).catch(err=>{
+      console.log("err",err)
+    })
+    
+
+   
+    
+    
+   
+    }).catch(error=>{
+      console.log("error",error)
+    })
+   
+ 
+
+  
+  
+    
+  
+  }
+</script>
