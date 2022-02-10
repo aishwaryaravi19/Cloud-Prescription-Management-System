@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<script>
+const localdata=JSON.parse(localStorage.getItem("localdata"))
+  window.onload=function(){
+    //location.reload()
+   
+    if(localdata["custom:userType"] != "Doctor"){
+      document.getElementById('addprescription').style.display = "none";
+    } 
+    else {
+      document.getElementById('addprescription').style.display = "block";
+    }
+  }
+  function callDeleteApi(fileName){
+      const data={
+        fileName
+      }
+    const options={
+        method:"POST",
+        headers: {
+        
+        'Content-Type': 'application/json'
+      },
+        body:JSON.stringify(data)
+      }
+      fetch("/prescriptiondelete",options).then(res=>{
+        console.log("Response",res)
+        res.json().then(json=>{
+          console.log("json",json)
+          if(json.message=="Success"){
+            alert("Prescription deleted")
+           location.reload()
+          }
+        }).catch(err=>{
+          console.log("eoor",err)
+        })
+          
+      }).catch(err=>{
+      })
+  }
+function callAddPrescriptionApi(emailId){
+    console.log("add pr email", emailId);
+    window.location.href=`/addprescription?email=${emailId}`
+ }
+ 
+ function callDashboard(){
+  
+   //window.location.href=`/dashboardview?userType=${localdata["custom:userType"]}&userName=${localdata.name}`
+ }
+ function logout(){
+   localStorage.clear();
+   location.href="/login"
+ }
+</script>
+<body>
+  <div style="height:80px;align-items: center; background-color: black;overflow: hidden;display: flex;flex-direction: row;">
+    <h1 style="color: white;text-align: center;flex: 1;margin: 0 auto;">Medex</h1>
+
+    <div style="display:flex;flex-direction: row;padding-right: 10px;">
+      <i style="align-self: center;color: white;" class="fa fa-sign-out" aria-hidden="true"></i>
+    <button
+    onclick="logout()"
+    style="color: white;height: 50px;outline: none;background-color: transparent;border: transparent;font-size: 16px;" >Logout</button>
+    </div> 
+    </div>
+<div class="row mt-5">
+    <div class="col-md-12 m-auto">
+        <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            
+        
+           
+              <ul class="navbar-nav mr-auto">
+                
+                  <button style="background-color:transparent;outline: transparent;" onclick="callDashboard()" class="btn btn-primary" >Dashboard</button>
+               
+                
+              </ul>
+             
+           
+          </nav> -->
+        <div class="card card-body">
+        <h1 class="text-center mb-3">
+                <i class="far fa-calendar-plus"></i>
+        </h1>
+        <div class="container-fluid">
+            <h4><center>Prescription Details</center></h4>
+            <br/>
+            <div id="addprescription" >
+              <button type="button" class="btn btn-primary" onclick="callAddPrescriptionApi('<%= email %>')">Add Prescription</button>
+            </div>
+            <br/><br/>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                    <th scope="col">File Name</th>
+                    <th scope="col">Download</th>
+                    <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <% var cf = 'http://d3i9r2ifyy8coc.cloudfront.net/'%>
+                <tbody>    
+                  <% data.forEach(function (data) { %>
+                   
+                        <tr class="table-secondary">
+                            <td><%= data.prescriptionName.S %></td>
+                            <td><a href='<%=cf + data.cloudfrontKey.S %>'><i class="medium fas fa-file-download"></i></a></td>
+                            <td><button type='button' class='btn btn-danger' name='fileurl' onclick="callDeleteApi('<%=data.cloudfrontKey.S %>')">Delete</button></td>
+                        </tr>
+               
+                    <% }) %>
+                </tbody>
+                </table> 
+        </div>  
+        </div>
+</div>
+</div>
+</body>
+</html>
