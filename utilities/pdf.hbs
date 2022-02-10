@@ -1,0 +1,148 @@
+<style type="text/css">
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight:200;
+}
+table {
+    width: 100%;
+}
+table tr td {
+    border: 1px solid black;
+    padding: 8px;
+}
+</style>
+<html lang="en">
+<center>Prescription Details</center>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div>            
+            <div class="row mt-5">
+            <div class="col-md-6 m-auto">
+                <div class="card card-body">
+                <h1 class="text-center mb-3">
+                        <i class="far fa-calendar-plus"></i>
+                </h1><form action="javascript:void(0)" method="POST">
+                    <input type="hidden" name="user" value="user">
+                    <table>
+                    <tr>
+                        <td colspan="2">
+                        <div class="input-field">
+                            <label for="sName">Prescription Name</label>
+                            <input
+                                type="text"
+                                id="sName"
+                                name="sName"
+                                class="form-control"
+                                value={{prescription}}
+                            />
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="input-field">
+                                <label for="pName">Patient Name</label>
+                                <input
+                                    type="text"
+                                    id="pName"
+                                    name="pName"
+                                    class="form-control"
+                                    value={{name}}
+                                />
+                            </div>
+                        </td>
+                        <td>
+                        <div class="input-field">
+                            <label for="tablet">Medicine Name</label>
+                            <input
+                                type="text"
+                                id="tablet"
+                                name="tablet"
+                                class="form-control"
+                                value={{medicine}}
+                            />
+                        </div>
+                        </td>            
+                    </tr>
+                    <tr>
+                        <td><div class="input-field">
+                            <input type="date" id="startDate" name="startDate" class="datepicker" 
+                            value={{sdate}} />
+                            <label for="startDate">Start Date</label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-field">
+                                <input type="date" id="endDate" name="endDate" class="datepicker"
+                                value={{edate}} />
+                                <label for="endDate">End Date</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="input-field">
+                            <label for="morningCnt">Morning Medicine count</label>
+                            <input
+                                type="text"
+                                id="morningCnt"
+                                name="morningCnt"
+                                class="form-control"
+                                value={{morning}}
+                            /> 
+                        </td>
+                        </div>
+                        <td>
+                            <div class="input-field">
+                            <label for="middayCnt">Midday Medicine count</label>
+                            <input
+                                type="text"
+                                id="middayCnt"
+                                name="middayCnt"
+                                class="form-control"
+                                value={{midday}}
+                            /> 
+                            </div>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="input-field">                
+                            <label for="eveningCnt">Evening Medicine count</label>
+                            <input
+                                type="text"
+                                id="eveningCnt"
+                                name="eveningCnt"
+                                class="form-control"
+                                value={{evening}}
+                            /> 
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-field">                
+                            <label for="bedtimeCnt">Bedtime Medicine count</label>
+                            <input
+                                type="text"
+                                id="bedtimeCnt"
+                                name="bedtimeCnt"
+                                class="form-control"
+                                value={{bedtime}}
+                            /> 
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                </form>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
